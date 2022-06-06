@@ -14,11 +14,9 @@ namespace Domain.ModelBuilderconfig
         public void Configure(EntityTypeBuilder<Incident> builder)
         {
             builder.ToTable("tblIncident");
-            builder.HasKey(key => key.Id);
-            builder.Property(p => p.Id)
-                .HasColumnName("Id");
-            builder.Property(p => p.Title)
-                .HasColumnName("Title")
+            builder.HasKey(o => new { o.Name });          
+            builder.Property(p => p.Name)
+                .HasColumnName("Name")
                 .HasMaxLength(100)
                 .IsRequired();
             builder.Property(p => p.Description)

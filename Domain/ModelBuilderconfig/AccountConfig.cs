@@ -20,11 +20,11 @@ namespace Domain.ModelBuilderconfig
                 .HasColumnName("AccountName")
                 .HasMaxLength(150)
                 .IsRequired();
-            builder.Property(p => p.IncidentId)
-                .HasColumnName("IncidentId");
+            builder.Property(p => p.IncidentNameKey)
+                .HasColumnName("IncidentName");
             builder.HasOne(i => i.Incident)
                 .WithMany(p => p.Accounts)
-                .HasForeignKey(fk => fk.IncidentId);
+                .HasForeignKey(fk => fk.IncidentNameKey);
             
         }
     }
