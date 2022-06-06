@@ -27,6 +27,8 @@ namespace Domain.ModelBuilderconfig
             builder.Property(p => p.Email)
                 .HasColumnName("Email")
                 .IsRequired();
+            builder.Property(p => p.AccountId)
+             .HasColumnName("AccountId");
             builder.HasOne(a => a.Account)
                 .WithMany(c => c.Contacts)
                 .HasForeignKey(fk => fk.AccountId);
