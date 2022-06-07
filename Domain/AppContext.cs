@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domain
 {
-    public class AppContext :DbContext
+    public class AppDbContext :DbContext
     {
-        public AppContext(DbContextOptions<AppContext> options) :
+        public AppDbContext(DbContextOptions<AppDbContext> options) :
            base(options)
         {
 

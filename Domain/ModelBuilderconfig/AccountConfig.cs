@@ -21,7 +21,8 @@ namespace Domain.ModelBuilderconfig
                 .HasMaxLength(150)
                 .IsRequired();
             builder.Property(p => p.IncidentNameKey)
-                .HasColumnName("IncidentName");
+                .HasColumnName("IncidentName")
+                .IsRequired();
             builder.HasOne(i => i.Incident)
                 .WithMany(p => p.Accounts)
                 .HasForeignKey(fk => fk.IncidentNameKey);
