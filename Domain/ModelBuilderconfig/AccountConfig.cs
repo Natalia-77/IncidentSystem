@@ -17,16 +17,16 @@ namespace Domain.ModelBuilderconfig
             builder.HasKey(key => key.Id);
             builder.Property(p => p.Id).HasColumnName("Id");
             builder.Property(p => p.Name)
-                .HasColumnName("AccountName")
+                .HasColumnName("Name")
                 .HasMaxLength(150)
                 .IsRequired();
             builder.Property(p => p.IncidentNameKey)
-                .HasColumnName("IncidentName")
-                .IsRequired();
-            builder.HasOne(i => i.Incident)
-                .WithMany(p => p.Accounts)
-                .HasForeignKey(fk => fk.IncidentNameKey);
-            
+                .HasColumnName("IncidentNameKey")
+                .IsRequired(false);         
+            builder.HasMany(im => im.Contacts)
+                .WithOne(u => u.Account)
+                .HasForeignKey(r => r.AccountId);
+
         }
     }
 }

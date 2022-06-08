@@ -23,6 +23,9 @@ namespace Domain.ModelBuilderconfig
               .HasColumnName("Description")
               .HasMaxLength(200)
               .IsRequired();
+            builder.HasMany(im => im.Accounts)
+               .WithOne(u => u.Incident)
+               .HasForeignKey(r => r.IncidentNameKey);
         }
     }
 }

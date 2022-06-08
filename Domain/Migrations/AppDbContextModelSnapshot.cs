@@ -32,15 +32,14 @@ namespace Domain.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("IncidentNameKey")
-                        .IsRequired()
                         .HasColumnType("character varying(100)")
-                        .HasColumnName("IncidentName");
+                        .HasColumnName("IncidentNameKey");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)")
-                        .HasColumnName("AccountName");
+                        .HasColumnName("Name");
 
                     b.HasKey("Id");
 
@@ -108,9 +107,7 @@ namespace Domain.Migrations
                 {
                     b.HasOne("Domain.Entities.Incident", "Incident")
                         .WithMany("Accounts")
-                        .HasForeignKey("IncidentNameKey")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IncidentNameKey");
 
                     b.Navigation("Incident");
                 });

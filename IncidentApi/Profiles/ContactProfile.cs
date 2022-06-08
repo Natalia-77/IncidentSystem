@@ -7,8 +7,7 @@ namespace IncidentApi.Profiles
     public class ContactProfile : Profile
     {
         public ContactProfile()
-        {
-          
+        {          
             CreateMap<CreateContactModel, Contact>();
             CreateMap<Contact, ItemContactModel>();
         }

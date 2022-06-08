@@ -27,18 +27,17 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AccountName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    IncidentName = table.Column<string>(type: "character varying(100)", nullable: false)
+                    Name = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    IncidentNameKey = table.Column<string>(type: "character varying(100)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblAccount", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tblAccount_tblIncident_IncidentName",
-                        column: x => x.IncidentName,
+                        name: "FK_tblAccount_tblIncident_IncidentNameKey",
+                        column: x => x.IncidentNameKey,
                         principalTable: "tblIncident",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Name");
                 });
 
             migrationBuilder.CreateTable(
@@ -63,9 +62,9 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblAccount_IncidentName",
+                name: "IX_tblAccount_IncidentNameKey",
                 table: "tblAccount",
-                column: "IncidentName");
+                column: "IncidentNameKey");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblContact_AccountId",

@@ -4,9 +4,9 @@ namespace IncidentApi.Repository.Contracts
 {
     public interface IContactRepository
     {
-        Task<IEnumerable<Contact>> GetAll();
-        Task<Contact?> GetByEmail(string email);
-        Task Create(Contact contact);
-        Task Save();
+        public List<Contact> GetAll();
+        Contact? GetByEmail(string email);
+        void Create(Contact contact);
+      
     }
 }

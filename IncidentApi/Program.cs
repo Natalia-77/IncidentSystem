@@ -2,6 +2,8 @@ using Domain;
 using IncidentApi.Profiles;
 using IncidentApi.Repository.Contracts;
 using IncidentApi.Repository.ImplementRepository;
+using IncidentApi.WrapperRepository.Contracts;
+using IncidentApi.WrapperRepository.Implementation;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -21,9 +23,13 @@ builder.Services.AddDbContext<AppDbContext>((DbContextOptionsBuilder options) =>
                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped <IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IWrapperRepo, WrapperRepo>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(ContactProfile));
+builder.Services.AddAutoMapper(typeof(AccountProfile));
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {

@@ -10,8 +10,8 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Contact> Contacts { get; set; }
-        public string IncidentNameKey { get; set; }
-        public virtual Incident Incident { get; set; }
+        public ICollection<Contact>? Contacts { get; set; }
+        public string? IncidentNameKey { get; set; }
+        public virtual Incident? Incident { get; set; }
     }
 }

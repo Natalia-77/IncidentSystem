@@ -30,9 +30,7 @@ namespace Domain.ModelBuilderconfig
             builder.Property(p => p.AccountId)
              .HasColumnName("AccountId")
              .IsRequired(false);
-            builder.HasOne(a => a.Account)
-                .WithMany(c => c.Contacts)
-                .HasForeignKey(fk => fk.AccountId);
+            
         }
     }
 }

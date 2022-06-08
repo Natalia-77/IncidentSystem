@@ -1,7 +1,6 @@
 ﻿using Domain;
 using Domain.Entities;
 using IncidentApi.Repository.Contracts;
-using Microsoft.EntityFrameworkCore;
 
 namespace IncidentApi.Repository.ImplementRepository
 {
@@ -14,29 +13,31 @@ namespace IncidentApi.Repository.ImplementRepository
             _context = context;
         }
 
-        public async Task Create(Contact contact)
+        public void Create (Contact contact)
         {
             if (contact == null)
             {
                 throw new ArgumentNullException(nameof(contact));
             }
 
-            await _context.Contacts!.AddAsync(contact);
+            _context.Contacts.Add(contact);
         }
 
-        public async Task<IEnumerable<Contact>> GetAll()
+        public List<Contact> GetAll()
         {
-            return await _context.Contacts!.ToListAsync();
+            return _context.Contacts.ToList();
         }
 
-        public Task<Contact?> GetByEmail(string email)
+      
+        public Contact? GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            if (email == null)
+            {
+                throw new ArgumentNullException(nameof(email), message: "Email must be not null");
+            }
+            return  _context.Contacts!.FirstOrDefault(c => c.Email == email);
         }
+               
 
-        public async Task Save()
-        {
-            await _context.SaveChangesAsync();
-        }
     }
 }
