@@ -30,5 +30,13 @@ namespace IncidentApi.Repository.ImplementRepository
             return _context.Accounts.ToList();      
                         
         }
+        public Account? GetByName(string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name), message: "Name must be not null");
+            }
+            return _context.Accounts!.FirstOrDefault(a => a.Name == name);
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace IncidentApi.Repository.Contracts
     {
         public List<Account> GetAllAccounts();
         public Account CreateAccount(Account account);
+        public Account? GetByName(string name);
     }
 }

@@ -1,4 +1,5 @@
-﻿using IncidentApi.Repository.Contracts;
+﻿
+using IncidentApi.Repository.Contracts;
 
 namespace IncidentApi.WrapperRepository.Contracts
 {
@@ -6,6 +7,7 @@ namespace IncidentApi.WrapperRepository.Contracts
     {
         IContactRepository Contact { get; }
         IAccountRepository Account { get; }
+        IIncidentRepository Incident { get; }
         void Save();
     }
 }

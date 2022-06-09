@@ -8,7 +8,6 @@ namespace IncidentApi.Profiles
     {
         public AccountProfile()
         {
-
             CreateMap<CreateAccountModel, Account>(); 
             CreateMap<ContactAddModel, Contact>();    
             CreateMap<Account, ItemAccountModel>();

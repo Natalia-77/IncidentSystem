@@ -22,14 +22,17 @@ builder.Services.AddDbContext<AppDbContext>((DbContextOptionsBuilder options) =>
 
                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped <IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
+
 builder.Services.AddScoped<IWrapperRepo, WrapperRepo>();
 
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(ContactProfile));
 builder.Services.AddAutoMapper(typeof(AccountProfile));
+builder.Services.AddAutoMapper(typeof(IncidentProfile));
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {

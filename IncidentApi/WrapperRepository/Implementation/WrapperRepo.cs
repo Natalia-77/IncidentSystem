@@ -9,6 +9,7 @@ namespace IncidentApi.WrapperRepository.Implementation
     {
         private IContactRepository _repoContact;
         private IAccountRepository _repoAccount;
+        private IIncidentRepository _repoIncident;
         private AppDbContext _dbContext;
 
         public WrapperRepo(AppDbContext dbContext)
@@ -36,6 +37,17 @@ namespace IncidentApi.WrapperRepository.Implementation
                     _repoAccount = new AccountRepository(_dbContext);
                 }
                 return _repoAccount;
+            }
+        }
+        public IIncidentRepository Incident
+        {
+            get
+            {
+                if (_repoIncident == null)
+                {
+                    _repoIncident = new IncidentRepository(_dbContext);
+                }
+                return _repoIncident;
             }
         }
 

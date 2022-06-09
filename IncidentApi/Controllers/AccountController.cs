@@ -60,7 +60,7 @@ namespace IncidentApi.Controllers
                 }
             }
 
-            return Ok(newItem);
+            return Ok(newItem.Name);
         }
 
         [HttpGet]
@@ -69,6 +69,21 @@ namespace IncidentApi.Controllers
             var contacts = _wrapperRepo.Account.GetAllAccounts();
             //var listContacts = _mapper.Map<IEnumerable<ItemAccountModel>>(contacts);
             return Ok(contacts);
+        }
+
+        [HttpGet]
+        [Route("{name}")]
+        public async Task<ActionResult<ItemAccountModel>> SearchByEmail(string name)
+        {
+            var contact = _wrapperRepo.Account.GetByName(name);
+
+            if (contact == null)
+            {
+                return NotFound();
+            }
+            var findItemContact = _mapper.Map<ItemAccountModel>(contact);
+
+            return Ok(findItemContact);
         }
     }
 }
