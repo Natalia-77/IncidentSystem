@@ -2,7 +2,6 @@
 using Domain.Entities;
 using IncidentApi.Models;
 using IncidentApi.WrapperRepository.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IncidentApi.Controllers
@@ -13,6 +12,7 @@ namespace IncidentApi.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IWrapperRepo _wrapperRepo;
+
         public AccountController(IMapper mapper, IWrapperRepo wrapperRepo)
         {
             _mapper = mapper;
@@ -20,24 +20,55 @@ namespace IncidentApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ItemAccountModel>> CreateAccount (CreateAccountModel create,string email)
+        [Route("create")]
+        public async Task<ActionResult<ItemAccountModel>> CreateAccount([FromBody] CreateAccountModel create, string? first, string? second)
         {
-            
-                var res = _wrapperRepo.Contact.GetByEmail(email);
-                if(res == null)
-                {
-                    return BadRequest();
-                }
-               
-           
-           
-            var contactModel = _mapper.Map<Account>(create);
+            foreach (var item in create.Contacts)
+            {
+                var checkEmail = _wrapperRepo.Contact.GetByEmail(item.Email);
 
-           // var r = _wrapperRepo.Account.CreateAccount(res, contactModel);                 
-            
+                if (!string.IsNullOrEmpty(first) && !string.IsNullOrEmpty(second))
+                {
+                    var newContact = new Contact();
+                    newContact.FirstName = first;
+                    newContact.LastName = second;
+                    newContact.Email = item.Email;
+                    newContact.AccountId = null;
+                    _wrapperRepo.Contact.Create(newContact);
+                    _wrapperRepo.Save();
+                }
+                else if (checkEmail == null)
+                {
+
+                    return NotFound(new { message = "There is no contact such email.Create new contact." });
+                }
+            }
            
-            //var readcontactModel = _mapper.Map<ItemAccountModel>(contactModel);
-            return Ok();
+            var newItem = new Account();
+            newItem.Name = create.Name;
+            _wrapperRepo.Account.CreateAccount(newItem);
+            _wrapperRepo.Save();
+
+          
+            foreach (var item in create.Contacts)
+            {
+                var contactUpdate = _wrapperRepo.Contact.GetByEmail(item.Email);
+                if (contactUpdate.AccountId == null)
+                {
+                    contactUpdate.Account = newItem;
+                    _wrapperRepo.Save();
+                }
+            }
+
+            return Ok(newItem);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ItemAccountModel>>> GetAllAccount()
+        {
+            var contacts = _wrapperRepo.Account.GetAllAccounts();
+            //var listContacts = _mapper.Map<IEnumerable<ItemAccountModel>>(contacts);
+            return Ok(contacts);
         }
     }
 }

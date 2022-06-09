@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using Domain;
+﻿using Domain;
 using Domain.Entities;
-using IncidentApi.Models;
 using IncidentApi.Repository.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace IncidentApi.Repository.ImplementRepository
 {
@@ -12,27 +11,24 @@ namespace IncidentApi.Repository.ImplementRepository
 
         public AccountRepository(AppDbContext context)
         {
-            _context = context;          
+            _context = context;         
             
         }
 
-        public Account CreateAccount(ICollection<Contact> contact, Account account)
+        public Account CreateAccount(Account account)
         {
-            if (contact == null)
+            if (account == null)
             {
-                throw new ArgumentNullException(nameof(contact),message:"No data to add");
-            }
-
-
-            var rr = new Account();
-            rr.Name = account.Name;
-            _context.Accounts.Add(rr);
-            return rr;
+                throw new ArgumentNullException(nameof(account),message:"No data to add");
+            }                 
+            _context.Accounts.Add(account);
+            return account;
         }
 
         public List<Account> GetAllAccounts()
         {
-            return _context.Accounts.ToList();
+            return _context.Accounts.ToList();      
+                        
         }
     }
 }

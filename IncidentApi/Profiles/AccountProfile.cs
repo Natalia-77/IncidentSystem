@@ -9,11 +9,8 @@ namespace IncidentApi.Profiles
         public AccountProfile()
         {
 
-            CreateMap<CreateAccountModel, Account>()
-               .ForMember(dest => dest.Name, opt => opt.MapFrom(x => x.Name))
-               .ForMember(dest => dest.IncidentNameKey, opt => opt.MapFrom(x => x.IncidentNameKey))
-               .ForMember(dest => dest.Contacts, opt => opt.Ignore());
-             
+            CreateMap<CreateAccountModel, Account>(); 
+            CreateMap<ContactAddModel, Contact>();    
             CreateMap<Account, ItemAccountModel>();
         }
     }
